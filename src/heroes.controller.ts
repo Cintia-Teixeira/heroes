@@ -2,8 +2,14 @@ import { Controller, Get, Param, Delete } from '@nestjs/common';
 
 @Controller('heroes')
 export class HeroesController {
+    constructor() {
+        this.listHeroes
+    };
 
-     
+  listHeroes = [
+        "Batman",
+        "Superman"
+    ]; 
 
     @Get()
     getList(): string[] {
@@ -16,15 +22,13 @@ export class HeroesController {
 
     @Get(':id')
     findHeroe(@Param() params): string {
-        var listHeroes = [
-            "Batman",
-            "Superman"
-        ];
-        return listHeroes[params.id];
+
+        return this.listHeroes[params.id];
     }
 
     @Delete(':id')
-    removeHeroe(@Param('id') id: string) {
-        return `Heroe #${id} removed`;
-    } 
+    removeHeroe(@Param('id') id: number) {
+
+        return this.listHeroes.splice(id, 1);
+    }
 }
