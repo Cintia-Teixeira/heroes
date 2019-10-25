@@ -1,22 +1,14 @@
 import { Controller, Get, Param, Delete } from '@nestjs/common';
 
 @Controller('heroes')
-export class HeroesController {
-    constructor() {
-        this.listHeroes
-    };
-
-  listHeroes = [
-        "Batman",
-        "Superman"
-    ]; 
+export class HeroesController { 
+    
+    listHeroes = ["Batman", "Superman"];
+    
 
     @Get()
     getList(): string[] {
-        return [
-            "Batman",
-            "Superman"
-        ];
+        return this.listHeroes;
 
     }
 
