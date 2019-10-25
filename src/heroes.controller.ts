@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Delete } from '@nestjs/common';
 
 @Controller('heroes')
 export class HeroesController {
@@ -22,4 +22,9 @@ export class HeroesController {
         ];
         return listHeroes[params.id];
     }
+
+    @Delete(':id')
+    removeHeroe(@Param('id') id: string) {
+        return `Heroe #${id} removed`;
+    } 
 }
