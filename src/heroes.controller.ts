@@ -2,19 +2,24 @@ import { Controller, Get, Param } from '@nestjs/common';
 
 @Controller('heroes')
 export class HeroesController {
-   
-    @Get()
-    getList(): string {
-        return 
-            'Batman'
-            'Superman'
-        ;     
+
      
+
+    @Get()
+    getList(): string[] {
+        return [
+            "Batman",
+            "Superman"
+        ];
+
     }
 
     @Get(':id')
     findHeroe(@Param() params): string {
-        console.log(params.name);
-        return `Heroe #${params.id} is ${params.name}`;
+        var listHeroes = [
+            "Batman",
+            "Superman"
+        ];
+        return listHeroes[params.id];
     }
 }
