@@ -37,9 +37,7 @@ export class HeroesController {
         for (var i = 0; i < this.heroes.length; i++) {
             if (this.heroes[i].id == id) {
                 this.heroes.splice((i), 1);
-                return 'remoção feita com sucesso'
             }
-            return 'não há índice com o valor passado'
         }
     }
 }
