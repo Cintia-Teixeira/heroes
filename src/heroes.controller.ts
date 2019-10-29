@@ -45,11 +45,11 @@ export class HeroesController {
         }
     }
 
-    @Post(':id/:nome/:idade')
+    @Put(':id/:nome/:idade')
     update(@Param('id') id: number, @Param('nome') nome: string, @Param('idade') idade: number) {
         for (var i = 0; i < this.heroes.length; i++) {
             if (this.heroes[i].id == id) {
-                this.heroes.splice((id), 3, {id, nome, idade});
+                this.heroes[i] = {id, nome, idade};
             }
         }
     }
