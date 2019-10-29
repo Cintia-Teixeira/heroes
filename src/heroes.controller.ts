@@ -1,36 +1,56 @@
-import { Controller, Get, Param, Delete, Post } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Post, Put } from '@nestjs/common';
 
 @Controller('heroes')
-export class HeroesController { 
-    
-    listHeroes = ["Batman", "Superman"];
-    
+export class HeroesController {
+
+    heroes = [
+        {
+            id: 1,
+            nome: "Batman",
+            idade: 35
+        },
+
+        {
+            id: 2,
+            nome: "Superman",
+            idade: 27
+        }
+    ];
 
     @Get()
-    getList(): string[] {
-        return this.listHeroes;
+    list(): object {
+        return this.heroes;
+    }
 
+    @Post(':id/:nome/:idade')
+    create(@Param('id') id: number, @Param('nome') nome: string, @Param('idade') idade: number) {
+        return this.heroes.push({ id, nome, idade });
     }
 
     @Get(':id')
-    findHeroe(@Param() params): string {
-
-        return this.listHeroes[params.id];
+    findHeroe(@Param('id') id: number) {
+        for (var i = 0; i < this.heroes.length; i++) {
+            if (this.heroes[i].id == id) {
+                return this.heroes[i];
+            }
+        }
     }
 
     @Delete(':id')
     removeHeroe(@Param('id') id: number) {
-
-        return this.listHeroes.splice(id, 1);
+        for (var i = 0; i < this.heroes.length; i++) {
+            if (this.heroes[i].id == id) {
+                this.heroes.splice((i), 1);
+            }
+        }
     }
 
-    @Post(':name')
-    create(@Param('name') name: string) {
-        return this.listHeroes.push(name);
-    }
-
-    @Post(':id/:name')
-    update(@Param('id') id: number, @Param('name') name: string) {
-        return this.listHeroes.splice(id, 1, name);
+    @Put(':id/:nome/:idade')
+    update(@Param('id') id: number, @Param('nome') nome: string, @Param('idade') idade: number) {
+        for (var i = 0; i < this.heroes.length; i++) {
+            if (this.heroes[i].id == id) {
+                this.heroes[i] = {id, nome, idade};
+            }
+        }
     }
 }
