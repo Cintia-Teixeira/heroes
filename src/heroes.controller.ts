@@ -1,9 +1,13 @@
-import { Controller, Get, Param, Delete, Post, Put } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Post, Put, Req, Body } from '@nestjs/common';
+import { Request } from 'express';
+import { HeroDto } from './dto/HeroDto';
 
 @Controller('heroes')
 export class HeroesController {
+    
+    
 
-    heroes = [
+    heroes: HeroDto[] = [
         {
             id: 1,
             nome: "Batman",
@@ -18,14 +22,17 @@ export class HeroesController {
     ];
 
     @Get()
-    list(): object {
+    list(): HeroDto[] {
         return this.heroes;
     }
 
-    @Post(':id/:nome/:idade')
-    create(@Param('id') id: number, @Param('nome') nome: string, @Param('idade') idade: number) {
-        return this.heroes.push({ id, nome, idade });
+    @Post()
+    add(@Body() heroDto: HeroDto) {
+        this.heroes.push(heroDto);
+        return `Herói ${heroDto.nome} adicionado com sucesso`;
     }
+
+
 
     @Get(':id')
     findHeroe(@Param('id') id: number) {
@@ -45,12 +52,14 @@ export class HeroesController {
         }
     }
 
-    @Put(':id/:nome/:idade')
-    update(@Param('id') id: number, @Param('nome') nome: string, @Param('idade') idade: number) {
+    @Put(':id')
+    update(@Param('id') id: number, @Body() heroDto: HeroDto) {
         for (var i = 0; i < this.heroes.length; i++) {
             if (this.heroes[i].id == id) {
-                this.heroes[i] = {id, nome, idade};
+                this.heroes[i] = heroDto;
             }
         }
     }
 }
+
+
