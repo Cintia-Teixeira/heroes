@@ -4,8 +4,8 @@ import { HeroDto } from './dto/HeroDto';
 
 @Controller('heroes')
 export class HeroesController {
-    
-    
+
+
 
     heroes: HeroDto[] = [
         {
@@ -35,7 +35,7 @@ export class HeroesController {
 
 
     @Get(':id')
-    findHeroe(@Param('id') id: number) {
+    findHero(@Param('id') id: number) {
         for (var i = 0; i < this.heroes.length; i++) {
             if (this.heroes[i].id == id) {
                 return this.heroes[i];
@@ -43,13 +43,17 @@ export class HeroesController {
         }
     }
 
-    @Delete(':id')
-    removeHeroe(@Param('id') id: number) {
-        for (var i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i].id == id) {
-                this.heroes.splice((i), 1);
+    @Delete(':i')
+    removeHero(@Param('i') i, @Body() hero : HeroDto){
+        function remove(hero) {
+            if ('id' in hero !== i) {
+                return true;
+            } else {
+                return false;
             }
         }
+        var heroesFiltered = this.heroes.filter(remove);
+        console.log(heroesFiltered);
     }
 
     @Put(':id')
