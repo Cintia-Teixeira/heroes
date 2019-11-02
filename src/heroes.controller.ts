@@ -1,5 +1,4 @@
 import { Controller, Get, Param, Delete, Post, Put, Req, Body } from '@nestjs/common';
-import { Request } from 'express';
 import { HeroDto } from './dto/HeroDto';
 
 @Controller('heroes')
@@ -34,35 +33,49 @@ export class HeroesController {
 
 
 
-    @Get(':id')
-    findHero(@Param('id') id: number) {
-        for (var i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i].id == id) {
-                return this.heroes[i];
+    @Get(':i')
+    findHero(@Param('i') i: number) {
+        function findHero(hero) {
+            if (hero.id == i) {
+                return true;
             }
+            return false;
         }
+
+        var heroFound = this.heroes.find(findHero);
+        return heroFound;
     }
 
     @Delete(':i')
-    removeHero(@Param('i') i, @Body() hero : HeroDto){
+    removeHero(@Param('i') i) {
         function remove(hero) {
-            if ('id' in hero !== i) {
+            if (hero.id != i) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }
         var heroesFiltered = this.heroes.filter(remove);
-        console.log(heroesFiltered);
+        this.heroes = heroesFiltered;
+        return this.heroes;
     }
 
-    @Put(':id')
-    update(@Param('id') id: number, @Body() heroDto: HeroDto) {
-        for (var i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i].id == id) {
-                this.heroes[i] = heroDto;
+    @Put(':i')
+    update(@Param('i') i: number, @Body() heroDto: HeroDto) {
+        function update(hero) {
+            if (hero.id == i) {
+                return true;
             }
+            return false;
         }
+        var toUpdate = this.heroes.find(update);
+
+        var x = this.heroes.indexOf(toUpdate);
+        if (~x) {
+            this.heroes[x] = heroDto;
+        }
+
+        return this.heroes[x];
+
     }
 }
 
