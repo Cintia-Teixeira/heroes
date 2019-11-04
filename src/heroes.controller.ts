@@ -36,7 +36,7 @@ export class HeroesController {
     }
 
     @Delete(':id')
-    removeHero(@Param('id') id) {
+    removeHero(@Param('id') id: number) {
         var heroesFiltered = this.heroes.filter(hero => hero.id != id);
         this.heroes = heroesFiltered;
         return this.heroes;
