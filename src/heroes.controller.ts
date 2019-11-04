@@ -29,22 +29,22 @@ export class HeroesController {
         return `Herói ${heroDto.nome} adicionado com sucesso`;
     }
 
-    @Get(':i')
-    findHero(@Param('i') i: number) {
-        var heroFound = this.heroes.find(hero => hero.id == i);
+    @Get(':id')
+    findHero(@Param('id') id: number) {
+        var heroFound = this.heroes.find(hero => hero.id == id);
         return heroFound;
     }
 
-    @Delete(':i')
-    removeHero(@Param('i') i) {
-        var heroesFiltered = this.heroes.filter(hero => hero.id != i);
+    @Delete(':id')
+    removeHero(@Param('id') id) {
+        var heroesFiltered = this.heroes.filter(hero => hero.id != id);
         this.heroes = heroesFiltered;
         return this.heroes;
     }
 
-    @Put(':i')
-    update(@Param('i') i: number, @Body() heroDto: HeroDto) {
-        var toUpdate = this.heroes.find(hero => hero.id == i);
+    @Put(':id')
+    update(@Param('id') id: number, @Body() heroDto: HeroDto) {
+        var toUpdate = this.heroes.find(hero => hero.id == id);
         toUpdate.nome = heroDto.nome;
         toUpdate.idade = heroDto.idade;
         return `Herói ${toUpdate.nome} atualizado com sucesso`;
