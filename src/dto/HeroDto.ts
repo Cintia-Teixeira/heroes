@@ -1,5 +1,5 @@
 export class HeroDto {
-    readonly id: number;
+    id: number;
     nome: string;
     idade: number;
 }

@@ -44,10 +44,8 @@ export class HeroesController {
 
     @Put(':id')
     update(@Param('id') id: number, @Body() heroDto: HeroDto) {
-        var toUpdate = this.heroes.find(hero => hero.id == id);
-        toUpdate.nome = heroDto.nome;
-        toUpdate.idade = heroDto.idade;
-        return `Herói ${toUpdate.nome} atualizado com sucesso`;
+        var toUpdate = this.heroes.findIndex(hero => hero.id == id);
+        this.heroes[toUpdate] = heroDto; 
     }
 }
 
