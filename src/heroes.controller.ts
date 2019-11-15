@@ -13,27 +13,27 @@ export class HeroesController {
     }
 
     @Post()
-    add(@Body() heroDto: HeroDto) {
+    add(@Body() heroDto: HeroDto) : HeroDto{
         this.heroDao.add(heroDto);
-        return `Herói ${heroDto.nome} adicionado com sucesso!`;
+        return heroDto;
     }
 
     @Get(':id')
-    findHero(@Param('id') id: number) {
+    findHero(@Param('id') id: number) : HeroDto {
         var heroFound = this.heroDao.findHero(id);
-        return heroFound || 'Herói não encontrado';
+        return heroFound;
     }
 
     @Delete(':id')
-    removeHero(@Param('id') id: number) {
+    removeHero(@Param('id') id: number) : HeroDto[] {
         this.heroDao.removeHero(id);
-        return 'Herói excluído com sucesso!';
+        return this.heroDao.list();
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() heroDto: HeroDto) {
+    update(@Param('id') id: number, @Body() heroDto: HeroDto) : HeroDto {
         this.heroDao.update(id, heroDto);
-        return 'Herói atualizado com sucesso!'
+        return this.heroDao.findHero(id);
     }
 
 }
