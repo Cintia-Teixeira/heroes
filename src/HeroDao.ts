@@ -4,21 +4,11 @@ import { HeroDto } from './dto/HeroDto';
 
 @Injectable()
 export class HeroDao {
+    id = 0;
 
     heroes: HeroDto[] = [
-        {
-            id: 1,
-            nome: "Batman",
-            idade: 35
-        },
-
-        {
-            id: 2,
-            nome: "Superman",
-            idade: 27
-        }
+        
     ];
-
 
     @Get()
     list(): HeroDto[] {
@@ -27,8 +17,11 @@ export class HeroDao {
 
     @Post()
     add(@Body() heroDto: HeroDto) : HeroDto {
+        heroDto.id = this.id + 1;
         this.heroes.push(heroDto);
+        this.id = heroDto.id;
         return heroDto;
+
     }
 
     @Get(':id')
@@ -39,7 +32,7 @@ export class HeroDao {
 
     @Delete(':id')
     removeHero(@Param('id') id: number) : HeroDto[] {
-        var heroesFiltered = this.heroes.filter(hero => hero.id != id);
+        var heroesFiltered = this.heroes.filter(hero => hero.id != id);    
         this.heroes = heroesFiltered;
         return this.heroes;
     }
