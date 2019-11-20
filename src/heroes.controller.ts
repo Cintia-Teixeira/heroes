@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Delete, Post, Put, Body } from '@nestjs/common';
-import { HeroDto } from './dto/HeroDto';
-import { HeroDao } from './HeroDao';
+import { HeroDto } from './dto/hero-dto';
+import { HeroDao } from './hero-dao.service';
 
 
 @Controller('heroes')
