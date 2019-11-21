@@ -21,6 +21,7 @@ export class HeroesController {
     @Get(':id')
     findHero(@Param('id') id: number): HeroDto {
         var heroFound = this.heroDao.findHero(id);
+        console.log(id);
         return heroFound;
     }
 

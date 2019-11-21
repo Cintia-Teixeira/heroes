@@ -32,6 +32,7 @@ export class HeroDao {
 
     update(id: number,heroDto: HeroDto) : HeroDto {
         var toUpdate = this.heroes.findIndex(hero => hero.id == id);
+        heroDto.id = id;
         this.heroes[toUpdate] = heroDto;
         return this.heroes[toUpdate];
     }
