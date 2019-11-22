@@ -25,9 +25,8 @@ export class HeroesController {
     }
 
     @Delete(':id')
-    removeHero(@Param('id') id: number): HeroDto[] {
+    removeHero(@Param('id') id: number) {
         this.heroDao.removeHero(id);
-        return this.heroDao.list();
     }
 
     @Put(':id')
