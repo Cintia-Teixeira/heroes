@@ -21,7 +21,6 @@ export class HeroesController {
     @Get(':id')
     findHero(@Param('id') id: number): HeroDto {
         var heroFound = this.heroDao.findHero(id);
-        console.log(id);
         return heroFound;
     }
 
@@ -32,9 +31,8 @@ export class HeroesController {
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() heroDto: HeroDto): HeroDto {
-        this.heroDao.update(id, heroDto);
-        return this.heroDao.findHero(id);
+    update(@Param('id') id: number, @Body() heroDto: HeroDto) {
+        var updated = this.heroDao.update(id, heroDto);
     }
 
 }
