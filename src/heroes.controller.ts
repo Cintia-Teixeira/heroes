@@ -1,65 +1,40 @@
-import { Controller, Get, Param, Delete, Post, Put, Req, Body } from '@nestjs/common';
-import { Request } from 'express';
-import { HeroDto } from './dto/HeroDto';
+import { Controller, Get, Param, Delete, Post, Put, Body } from '@nestjs/common';
+import { HeroDto } from './dto/hero-dto';
+import { HeroDao } from './hero-dao.service';
+
 
 @Controller('heroes')
 export class HeroesController {
-    
-    
-
-    heroes: HeroDto[] = [
-        {
-            id: 1,
-            nome: "Batman",
-            idade: 35
-        },
-
-        {
-            id: 2,
-            nome: "Superman",
-            idade: 27
-        }
-    ];
+    constructor(private heroDao: HeroDao) { }
 
     @Get()
     list(): HeroDto[] {
-        return this.heroes;
+        return this.heroDao.list();
     }
 
     @Post()
-    add(@Body() heroDto: HeroDto) {
-        this.heroes.push(heroDto);
-        return `Herói ${heroDto.nome} adicionado com sucesso`;
+    add(@Body() heroDto: HeroDto): HeroDto {
+        this.heroDao.add(heroDto);
+        return heroDto;
     }
 
-
-
     @Get(':id')
-    findHeroe(@Param('id') id: number) {
-        for (var i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i].id == id) {
-                return this.heroes[i];
-            }
-        }
+    findHero(@Param('id') id: number): HeroDto {
+        var heroFound = this.heroDao.findHero(id);
+        return heroFound;
     }
 
     @Delete(':id')
-    removeHeroe(@Param('id') id: number) {
-        for (var i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i].id == id) {
-                this.heroes.splice((i), 1);
-            }
-        }
+    removeHero(@Param('id') id: number): HeroDto[] {
+        this.heroDao.removeHero(id);
+        return this.heroDao.list();
     }
 
     @Put(':id')
     update(@Param('id') id: number, @Body() heroDto: HeroDto) {
-        for (var i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i].id == id) {
-                this.heroes[i] = heroDto;
-            }
-        }
+        var updated = this.heroDao.update(id, heroDto);
     }
+
 }
 
 
