@@ -1,4 +1,4 @@
-import { UserDto } from './dto/user-dto';
+import { UserDto } from './user-dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

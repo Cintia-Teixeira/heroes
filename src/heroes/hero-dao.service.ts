@@ -1,5 +1,5 @@
 import { Injectable, Get, Post, Put, Delete, Body, Param } from "@nestjs/common";
-import { HeroDto } from './dto/hero-dto';
+import { HeroDto } from './hero-dto';
 
 
 @Injectable()
