@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Delete, Post, Put, Body } from '@nestjs/common';
-import { HeroDto } from './dto/hero-dto';
+import { HeroDto } from './hero-dto';
 import { HeroDao } from './hero-dao.service';
 
 
@@ -25,9 +25,8 @@ export class HeroesController {
     }
 
     @Delete(':id')
-    removeHero(@Param('id') id: number): HeroDto[] {
+    removeHero(@Param('id') id: number) {
         this.heroDao.removeHero(id);
-        return this.heroDao.list();
     }
 
     @Put(':id')

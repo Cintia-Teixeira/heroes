@@ -1,6 +1,6 @@
 export class HeroDto {
     
     id: number;
-    nome: string;
-    idade: number;
+    name: string;
+    age: number;
 }
