@@ -1,34 +1,38 @@
 import { UserDto } from './user-dto';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserDao {
+    constructor(
+        @InjectRepository(User)
+        private userRepository: Repository<User>
+    ) { }
 
-    users: UserDto[] = [];
 
-    listUsers(): UserDto[] {
-        return this.users;
+    listUsers(): Promise<User[]> {
+        return this.userRepository.find();
     }
 
-    findUser(login: string): UserDto {
-        var userFound = this.users.find(user => user.login == login);
+    findUser(login: string): Promise<User> {
+        var userFound = this.userRepository.findOne(login);
         return userFound;
     }
 
     addUser(userDto: UserDto): UserDto {
-        this.users.push(userDto);
+        this.userRepository.save(userDto);
         return userDto;
     }
 
-    deleteUser(login: string): UserDto[] {
-        this.users = this.users.filter(user => user.login != login);
-        return this.users;
+    deleteUser(login: string) {
+        this.userRepository.delete(login);
     }
 
     updateUser(login: string, userDto: UserDto) {
-        var toUpdate = this.users.findIndex(user => user.login == login);
-        this.users[toUpdate] = { ...this.users[toUpdate], ...userDto };
-        return toUpdate;
+        var toUpdate = this.userRepository[login];
+        toUpdate.save(userDto);
 
     }
 

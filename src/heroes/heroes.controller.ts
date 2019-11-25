@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Delete, Post, Put, Body } from '@nestjs/common';
 import { HeroDto } from './hero-dto';
 import { HeroDao } from './hero-dao.service';
+import { Hero } from './hero.entity';
 
 
 @Controller('heroes')
@@ -8,7 +9,7 @@ export class HeroesController {
     constructor(private heroDao: HeroDao) { }
 
     @Get()
-    list(): HeroDto[] {
+    list(): Promise<Hero[]> {
         return this.heroDao.list();
     }
 
@@ -19,7 +20,7 @@ export class HeroesController {
     }
 
     @Get(':id')
-    findHero(@Param('id') id: number): HeroDto {
+    findHero(@Param('id') id: number): Promise<Hero> {
         var heroFound = this.heroDao.findHero(id);
         return heroFound;
     }
@@ -31,7 +32,7 @@ export class HeroesController {
 
     @Put(':id')
     update(@Param('id') id: number, @Body() heroDto: HeroDto) {
-        var updated = this.heroDao.update(id, heroDto);
+        this.heroDao.update(id, heroDto);
     }
 
 }

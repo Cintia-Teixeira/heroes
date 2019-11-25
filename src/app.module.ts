@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common';
-import { HeroesController } from './heroes/heroes.controller';
 import { AppService } from './app.service';
-import { HeroDao } from './heroes/hero-dao.service';
-import { UsersController } from './users/users.controller';
-import { UserDao } from './users/user-dao.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Hero } from './heroes/hero.entity';
+import { HeroModule } from './heroes/hero.module';
+import { UserModule } from './users/users.module';
 
 @Module({
-  imports: [],
-  controllers: [HeroesController, UsersController],
-  providers: [AppService, HeroDao, UserDao],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'heroes',
+      entities: [Hero],
+    }),
+    HeroModule,
+    UserModule,
+  ],
+  controllers: [],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

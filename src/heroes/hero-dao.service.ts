@@ -1,39 +1,39 @@
 import { Injectable, Get, Post, Put, Delete, Body, Param } from "@nestjs/common";
 import { HeroDto } from './hero-dto';
+import { InjectRepository } from "@nestjs/typeorm";
+import { Hero } from "./hero.entity";
+import { Repository } from "typeorm";
 
 
 @Injectable()
 export class HeroDao {
-    id = 0;
+    constructor(
+        @InjectRepository(Hero)
+        private heroRepository: Repository<Hero>,
+    ) { }
 
-    heroes: HeroDto[] = [];
 
-    list(): HeroDto[] {
-        return this.heroes;
+    list(): Promise<Hero[]> {
+        return this.heroRepository.find();
     }
 
-    add(heroDto: HeroDto) : HeroDto {
-        heroDto.id = this.id + 1;
-        this.heroes.push(heroDto);
-        this.id = heroDto.id;
+    add(heroDto: HeroDto): HeroDto {
+        this.heroRepository.save(heroDto);
         return heroDto;
     }
 
-    findHero(id: number) : HeroDto {
-        var heroFound = this.heroes.find(hero => hero.id == id);
+    findHero(id: number): Promise<Hero> {
+        var heroFound = this.heroRepository.findOne(id);
         return heroFound;
     }
-   
-    removeHero(id: number) : HeroDto[] {
-        var heroesFiltered = this.heroes.filter(hero => hero.id != id);    
-        this.heroes = heroesFiltered;
-        return this.heroes;
+
+    removeHero(id: number) {
+        this.heroRepository.delete(id);
     }
 
-    update(id: number , heroDto: HeroDto) : HeroDto {
-        var toUpdate = this.heroes.findIndex(hero => hero.id == id);
-        this.heroes[toUpdate] = { ...this.heroes[toUpdate], ...heroDto}
-        return this.heroes[toUpdate];
+    update(id: number, heroDto: HeroDto) {
+        var toUpdate =  this.heroRepository[id] ;
+        toUpdate.save(heroDto);
     }
 
 } 
