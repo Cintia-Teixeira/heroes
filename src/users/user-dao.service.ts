@@ -32,7 +32,7 @@ export class UserDao {
 
     updateUser(login: string, userDto: UserDto) {
         var toUpdate = this.userRepository[login];
-        toUpdate.save(userDto);
+       this.userRepository[toUpdate] = { ...this.userRepository[toUpdate], ...userDto };
 
     }
 

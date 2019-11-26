@@ -4,13 +4,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Hero } from './heroes/hero.entity';
 import { HeroModule } from './heroes/hero.module';
 import { UserModule } from './users/users.module';
+import { User } from './users/user.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'heroes',
-      entities: [Hero],
+      database: 'heroes.db',
+      synchronize: true,
+      logging: false,
+      entities: [Hero, User],
     }),
     HeroModule,
     UserModule,
