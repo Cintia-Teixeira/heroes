@@ -31,9 +31,7 @@ export class UserDao {
     }
 
     updateUser(login: string, userDto: UserDto) {
-        var toUpdate = this.userRepository[login];
-       this.userRepository[toUpdate] = { ...this.userRepository[toUpdate], ...userDto };
-
+        this.userRepository.update(login, userDto);
     }
 
 

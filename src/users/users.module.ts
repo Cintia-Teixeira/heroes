@@ -11,4 +11,4 @@ import { User } from './user.entity';
 
 })
 
-export class UserModule {}
+export class UserModule { }

@@ -10,5 +10,5 @@ import { Hero } from './hero.entity';
     controllers: [HeroesController],
 })
 
-export class HeroModule {}
+export class HeroModule { }
 

@@ -32,8 +32,7 @@ export class HeroDao {
     }
 
     update(id: number, heroDto: HeroDto) {
-        var toUpdate = this.heroRepository[id] ;
-        this.heroRepository[toUpdate] = this.heroRepository[toUpdate].save(heroDto);
+        this.heroRepository.update(id, heroDto);
     }
 
 } 
