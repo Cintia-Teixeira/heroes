@@ -8,6 +8,7 @@ import { User } from './user.entity';
     imports: [TypeOrmModule.forFeature([User])],
     providers: [UserDao],
     controllers: [UsersController],
+    exports: [UserDao],
 
 })
 
