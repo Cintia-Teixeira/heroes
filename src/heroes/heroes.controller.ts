@@ -41,7 +41,6 @@ export class HeroesController {
     update(@Param('id') id: number, @Body() heroDto: HeroDto) {
         this.heroDao.update(id, heroDto);
     }
-
 }
 
 

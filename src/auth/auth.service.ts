@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { UserDao } from "src/users/user-dao.service";
-import { User } from "src/users/user.entity";
-import { AnyARecord } from "dns";
 
 @Injectable()
 export class AuthService {
