@@ -1,9 +1,13 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
 import { UserDao } from "src/users/user-dao.service";
+import { JwtService } from "@nestjs/jwt";       
 
 @Injectable()
 export class AuthService {
-    constructor(private userDao: UserDao) { }
+    constructor(
+        private userDao: UserDao, 
+        private jwtService: JwtService
+    ) { }
 
     //https://github.com/kelektiv/node.bcrypt.js#readme   ==> store hashed password
     async validateUser(login: string, pass: string): Promise<any> {
@@ -13,5 +17,13 @@ export class AuthService {
             return result;
         }
         return null;
+    }
+
+    
+    async login(user : any){
+        const payload = { login: user.login, sub: user.email };
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
     }
 }

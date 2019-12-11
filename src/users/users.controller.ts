@@ -1,11 +1,22 @@
 import { UserDao } from './user-dao.service';
-import { Controller, Get, Param, Post, Body, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete, Put, Request, UseGuards  } from '@nestjs/common';
 import { UserDto } from './user-dto';
 import { User } from './user.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('users')
 export class UsersController {
-    constructor(private userDao: UserDao) { }
+    constructor(
+        private userDao: UserDao,
+        //private authService: AuthService, 
+    ) { }
+
+    @UseGuards(AuthGuard('local'))
+    @Post('auth/login')
+    async login(@Request() req) {
+      return req.user;
+    }
 
     @Get()
     listUsers(): Promise<User[]> {
