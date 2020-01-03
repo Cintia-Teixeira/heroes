@@ -6,7 +6,7 @@ import { JwtService } from "@nestjs/jwt";
 export class AuthService {
     constructor(
         private userDao: UserDao, 
-        private jwtService: JwtService
+        //private jwtService: JwtService
     ) { }
 
     //https://github.com/kelektiv/node.bcrypt.js#readme   ==> store hashed password
@@ -19,11 +19,11 @@ export class AuthService {
         return null;
     }
 
-    
-    async login(user : any){
+
+   /* async login(user : any){
         const payload = { login: user.login, sub: user.email };
         return {
             access_token: this.jwtService.sign(payload),
         };
-    }
+    }*/
 }
