@@ -13,7 +13,7 @@ export class User {
     email: string
 
     @PrimaryColumn()
-    login: string
+    username: string
 
     @Column()
     password: string

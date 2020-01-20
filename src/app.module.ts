@@ -5,6 +5,7 @@ import { Hero } from './heroes/hero.entity';
 import { HeroModule } from './heroes/hero.module';
 import { UserModule } from './users/users.module';
 import { User } from './users/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { User } from './users/user.entity';
     }),
     HeroModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [AppService],

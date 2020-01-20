@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@nestjs/common";
-import { UserDao } from "src/users/user-dao.service";
+import { UserDao } from "../users/user-dao.service";
 import { JwtService } from "@nestjs/jwt";       
 
 @Injectable()
