@@ -3,22 +3,29 @@ import { Controller, Get, Param, Post, Body, Delete, Put, Request, UseGuards  } 
 import { UserDto } from './user-dto';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('users')
 export class UsersController {
     constructor(
-        private userDao: UserDao,
-        //private authService: AuthService, 
+     //   private userDao: UserDao,
+        private authService: AuthService, 
     ) { }
 
     @UseGuards(AuthGuard('local'))
     @Post('auth/login')
     async login(@Request() req) {
-      return req.user;
+      return this.authService.login(req.user);
     }
 
-    @Get()
+    @UseGuards(AuthGuard('jwt'))
+    @Get('profile')
+    getProfile(@Request() req) {
+        return req.user;
+    }
+
+
+  /*  @Get()
     listUsers(): Promise<User[]> {
         return this.userDao.listUsers();
     }
@@ -43,6 +50,6 @@ export class UsersController {
     @Put(':login')
     updateUser(@Param('login') login: string, @Body() userDto: UserDto) {
         this.userDao.updateUser(login, userDto);
-    }
+    }*/
 
 }
