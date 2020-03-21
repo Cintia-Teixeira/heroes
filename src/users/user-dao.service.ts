@@ -35,7 +35,4 @@ export class UserDao {
     updateUser(login: string, userDto: UserDto) {
         this.userRepository.update(login, userDto);
     }
-
-
-
 }

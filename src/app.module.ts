@@ -17,7 +17,6 @@ import { AuthModule } from './auth/auth.module';
       entities: [Hero, User],
     }),
     HeroModule,
-    UserModule,
     AuthModule,
   ],
   controllers: [],

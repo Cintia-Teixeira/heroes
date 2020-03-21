@@ -6,8 +6,7 @@ import { LocalStrategy } from "./local.strategy";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./constants";
 import { JwtStrategy } from "./jwt.strategy";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { User } from "../users/user.entity";
+import { AuthController } from "./auth.controller";
 
 @Module({
     imports: [
@@ -18,7 +17,7 @@ import { User } from "../users/user.entity";
             signOptions: { expiresIn: '60s'},
         }),
     ],
-    controllers: [],
+    controllers: [AuthController],
     providers: [AuthService, LocalStrategy, JwtStrategy],
     exports: [AuthService],
 })
