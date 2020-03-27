@@ -18,7 +18,7 @@ export class User {
     @Column()
     password: string
 
-    @Generated()
-    userId: number
+    /*@Generated()
+    userId: number*/
 
 }

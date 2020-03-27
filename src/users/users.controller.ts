@@ -24,6 +24,7 @@ export class UsersController {
     addUser(@Body() userDto: UserDto): UserDto {
         this.userDao.addUser(userDto);
         return userDto;
+        
     }
 
     @Delete(':login')

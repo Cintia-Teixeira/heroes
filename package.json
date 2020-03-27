@@ -33,6 +33,7 @@
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
     "sqlite": "^3.0.3",
+    "sqlite3": "^4.1.1",
     "typeorm": "^0.2.20"
   },
   "devDependencies": {
