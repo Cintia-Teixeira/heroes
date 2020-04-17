@@ -5,6 +5,8 @@ import { Hero } from './heroes/hero.entity';
 import { HeroModule } from './heroes/hero.module';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from './AllExceptionsFilter';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [],
-  providers: [AppService],
+  providers: [AppService, 
+    {provide: APP_FILTER,
+    useClass: AllExceptionsFilter}],
 })
 export class AppModule { }
