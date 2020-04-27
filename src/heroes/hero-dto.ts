@@ -4,7 +4,7 @@ export class HeroDto {
 
     id: number;
 
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'The hero must have a name'})
     name: string;
     
     age: number;

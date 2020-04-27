@@ -6,10 +6,10 @@ export class UserDto {
     age: number;
     email: string;
 
-    @IsNotEmpty()
+    @IsNotEmpty({message: "The user must have a name"})
     username: string;
 
-    @IsNotEmpty()
+    @IsNotEmpty({message: "The user must have a password"})
     password: string;
 
 }
