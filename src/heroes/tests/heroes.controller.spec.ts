@@ -46,7 +46,7 @@ describe('HeroesController', () => {
     });
 
     describe('removeHero', () => {
-        it('should not return anything', async () => {
+        it('should not have a return', async () => {
             heroDto = new HeroDto();
             const id = heroDto.id;
             const result = void
