@@ -2,23 +2,22 @@
 
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, HttpModule } from '@nestjs/common';
 import { Hero } from '../../hero.entity';
 import { AppModule } from '../../../app.module';
 import { HeroDao } from '../../hero-dao.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
-describe('Heroes', () => {
+describe('HeroesController', () => {
     let app: INestApplication;
     let heroDao = { list: () => Hero['test']};
     
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
-            imports: [AppModule, TypeOrmModule],
+            imports: [AppModule, HttpModule],
         })
         .overrideProvider(HeroDao)
-        .useValue(heroDao)
+        .useValue(heroDao)  
         .compile();
 
         app = moduleRef.createNestApplication();
