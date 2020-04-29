@@ -1,5 +1,3 @@
-//Unit Testing
-
 import { HeroesController } from "../heroes.controller";
 import { HeroDao } from '../hero-dao.service';
 import { Hero } from "../hero.entity";

@@ -1,5 +1,3 @@
-//Testing Utilities
-
 import { HeroesController } from "../heroes.controller"
 import { HeroDao } from "../hero-dao.service";
 import { Hero } from "../hero.entity";
@@ -7,6 +5,7 @@ import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppModule } from "../../app.module";
 import { HeroDto } from "../hero-dto";
+import { SqljsEntityManager } from "typeorm/entity-manager/SqljsEntityManager";
 
 describe('HeroesController', () => {
     let heroesController : HeroesController;
