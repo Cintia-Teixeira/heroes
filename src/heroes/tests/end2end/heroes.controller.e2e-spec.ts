@@ -17,7 +17,7 @@ describe('HeroesController', () => {
             imports: [AppModule, HttpModule],
         })
         .overrideProvider(HeroDao)
-        .useValue(heroDao)  
+        .useValue(heroDao)          
         .compile();
 
         app = moduleRef.createNestApplication();
@@ -28,9 +28,9 @@ describe('HeroesController', () => {
         return request(app.getHttpServer())
         .get(`/heroes`)
         .expect(200)
-        .expect({
-            data: heroDao.list(),
-        });
+        .expect(
+            heroDao.list()
+        );
     });
 
     afterAll(async () => {
