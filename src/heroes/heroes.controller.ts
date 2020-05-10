@@ -2,7 +2,7 @@ import { Controller, Get, Param, Delete, Post, Put, Body, UseGuards } from '@nes
 import { HeroDto } from './hero-dto';
 import { HeroDao } from './hero-dao.service';
 import { Hero } from './hero.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 
 @Controller('heroes')
