@@ -1,6 +1,6 @@
 import { UserDao } from './user-dao.service';
 import { Controller, Get, Param, Post, Body, Delete, Put } from '@nestjs/common';
-import { UserDto } from './user-dto';
+import { UserDto } from './user.dto';
 import { User } from './user.entity';
 
 @Controller('users')
