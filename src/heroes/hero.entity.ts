@@ -12,4 +12,5 @@ export class Hero {
     @Column()
     age: number;
 
+    isEnabled?: boolean = true;
 }

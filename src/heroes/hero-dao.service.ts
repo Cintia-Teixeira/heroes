@@ -1,5 +1,5 @@
-import { Injectable, Get, Post, Put, Delete, Body, Param } from "@nestjs/common";
-import { HeroDto } from './hero-dto';
+import { Injectable } from "@nestjs/common";
+import { HeroDto } from './hero.dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Hero } from "./hero.entity";
 import { Repository } from "typeorm";

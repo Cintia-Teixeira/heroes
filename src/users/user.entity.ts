@@ -18,4 +18,6 @@ export class User {
     @Column()
     password: string
 
+    isEnabled?: boolean = true;
+
 }
