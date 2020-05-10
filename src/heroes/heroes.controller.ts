@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Delete, Post, Put, Body, UseGuards } from '@nestjs/common';
-import { HeroDto } from './hero.dto';
+import { HeroDto } from './hero-dto';
 import { HeroDao } from './hero-dao.service';
 import { Hero } from './hero.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
