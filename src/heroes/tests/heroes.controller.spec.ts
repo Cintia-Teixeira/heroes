@@ -1,10 +1,10 @@
 //Unit Testing
 
 import { HeroesController } from "../heroes.controller";
-import { HeroDao } from '../hero-dao.service';
+import { HeroDao } from '../hero.dao.service';
 import { Hero } from "../hero.entity";
 import { Repository } from "typeorm";
-import { HeroDto } from "../hero-dto";
+import { HeroDto } from "../hero.dto";
 
 describe('HeroesController', () => {
     let heroesController: HeroesController;

@@ -1,12 +1,12 @@
 //Testing Utilities
 
 import { HeroesController } from "../heroes.controller"
-import { HeroDao } from "../hero-dao.service";
+import { HeroDao } from "../hero.dao.service";
 import { Hero } from "../hero.entity";
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppModule } from "../../app.module";
-import { HeroDto } from "../hero-dto";
+import { HeroDto } from "../hero.dto";
 
 describe('HeroesController', () => {
     let heroesController : HeroesController;

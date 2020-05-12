@@ -2,19 +2,20 @@
 
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { INestApplication, HttpModule } from '@nestjs/common';
-import { Hero } from '../../hero.entity';
+import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../../../app.module';
-import { HeroDao } from '../../hero-dao.service';
+import { HeroDao } from '../../hero.dao.service';
 
 describe('HeroesController', () => {
     let app: INestApplication;
-    let heroDao = { list: () => Hero['test']};
+    let heroDao = {
+         list: () => [{ id: 1, name: 'Batman', age: 20 }]
+    };
     
 
     beforeAll(async () => {
         const moduleRef = await Test.createTestingModule({
-            imports: [AppModule, HttpModule],
+            imports: [AppModule],
         })
         .overrideProvider(HeroDao)
         .useValue(heroDao)          
