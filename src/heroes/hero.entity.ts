@@ -12,4 +12,7 @@ export class Hero {
     @Column()
     age: number;
 
+    @Column({nullable: true})
+    gender: string;
+
 }

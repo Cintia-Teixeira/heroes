@@ -3,6 +3,7 @@ import { HeroDto } from './hero.dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Hero } from "./hero.entity";
 import { Repository } from "typeorm";
+import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
 
 
 @Injectable()
@@ -15,6 +16,10 @@ export class HeroDao {
 
     list(): Promise<Hero[]> {
         return this.heroRepository.find();
+    }
+
+    async paginate(options: IPaginationOptions): Promise<Pagination<Hero>>{
+        return paginate<Hero>(this.heroRepository, options);
     }
 
     add(heroDto: HeroDto): HeroDto {
