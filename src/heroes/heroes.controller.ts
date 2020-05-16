@@ -4,12 +4,13 @@ import { HeroDao } from './hero.dao.service';
 import { Hero } from './hero.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { getRepository } from "typeorm";
 
 @Controller('heroes')
 export class HeroesController {
     constructor(private heroDao: HeroDao) { }
 
-/*@Get()
+   /* @Get()
     list(): Promise<Hero[]> {
         return this.heroDao.list();
     }*/
@@ -26,6 +27,35 @@ export class HeroesController {
             route: '/heroes',
         });
     }
+
+    @Get('search')
+    async filterByGenderAndAge(
+        @Query('gender') gender: string,
+        @Query('age') age: number,
+        @Query('page') page: number,
+        @Query('limit') limit: number) {
+        const hero = this.heroDao.filterByGenderAndAge(gender, age, page, limit);
+        return hero;
+    }
+
+    @Get('gender')
+    async filterByGender(
+        @Query('gender') gender: string,
+        @Query('page') page: number,
+        @Query('limit') limit: number, ) {
+        const hero = this.heroDao.filterByGender(gender, page, limit)
+        return hero;
+    }
+
+    @Get('age')
+    async filterByAge(
+        @Query('age') age: number,
+        @Query('page') page: number,
+        @Query('limit') limit: number, ) {
+        const hero = this.heroDao.filterByAge(age, page, limit)
+        return hero;
+    }
+
 
     @UseGuards(JwtAuthGuard)
     @Post()
