@@ -3,8 +3,8 @@ import { HeroDto } from './hero.dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Hero } from "./hero.entity";
 import { Repository, getRepository } from "typeorm";
-import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
-import { MaxLength } from "class-validator";
+import { GenderAndAgeQueryDto } from "./query.dto";
+//import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 
 @Injectable()
@@ -15,22 +15,48 @@ export class HeroDao {
     ) { }
 
 
-    list(): Promise<Hero[]> {
+    /*list(): Promise<Hero[]> {
         return this.heroRepository.find();
     }
 
-    async paginate(options: IPaginationOptions): Promise<Pagination<Hero>>{
+   /* async paginate(options: IPaginationOptions): Promise<Pagination<Hero>>{
          return paginate<Hero>(this.heroRepository, options);
-     }
+     }*/
 
-    async filterByGenderAndAge(gender: string, age: number, page: number = 1, limit: number) {
+    async filter(query: GenderAndAgeQueryDto, page: number = 1, limit: number) {
+        
         const hero = await getRepository(Hero)
-            .createQueryBuilder("hero")
-            .where("hero.gender = gender", { gender: gender })
-            .andWhere("hero.age = age", { age: age })
+            .createQueryBuilder('hero')
+            .where("hero.gender = :gender", { gender: query.gender })
+            .orWhere("hero.age = :age", { age: query.age })
             .take(limit)
             .skip(limit * (page - 1))
             .getMany();
+
+        const both = await getRepository(Hero)
+            .createQueryBuilder('hero')
+            .where("hero.gender = :gender", { gender: query.gender })
+            .andWhere("hero.age = :age", { age: query.age })
+            .take(limit)
+            .skip(limit * (page - 1))
+            .getMany();
+
+        if (query.age != null && query.gender != null) {
+            return both;
+        }
+        else {
+            return hero;
+        }
+    }
+
+    async search(gender: string, age: number, page: number = 1, limit: number) {
+        const hero = await getRepository(Hero)
+            .createQueryBuilder('hero')
+            .where("hero.gender = :gender", { gender: gender })
+            .andWhere("hero.age = :age", { age: age })
+            .take(limit)
+            .skip(limit * (page - 1))
+            .getMany()
 
         return hero;
     }
