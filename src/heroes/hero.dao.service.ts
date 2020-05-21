@@ -4,8 +4,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Hero } from "./hero.entity";
 import { Repository, getRepository } from "typeorm";
 import { GenderAndAgeQueryDto } from "./query.dto";
-//import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
-
+import { CustomQueryBuilder } from "src/utils/custom-query-builder";
+import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class HeroDao {
@@ -15,38 +15,25 @@ export class HeroDao {
     ) { }
 
 
-    /*list(): Promise<Hero[]> {
-        return this.heroRepository.find();
+    // list(): Promise<Hero[]> {
+    //     return this.heroRepository.find();
+    // }
+
+
+    async paginate(options: IPaginationOptions): Promise<Pagination<Hero>> {
+        return paginate<Hero>(this.heroRepository, options);
     }
 
-   /* async paginate(options: IPaginationOptions): Promise<Pagination<Hero>>{
-         return paginate<Hero>(this.heroRepository, options);
-     }*/
+    async filter(query: GenderAndAgeQueryDto, page: number, limit: number) {
+        const queryBuilder = await getRepository(Hero).createQueryBuilder('hero');
+        const result = new CustomQueryBuilder(queryBuilder, 'hero')
+            .getQuery(query)
+            .getLimit(limit)
+            .getPage(limit * (page - 1))
+            .build()
+            .getMany()
 
-    async filter(query: GenderAndAgeQueryDto, page: number = 1, limit: number) {
-        
-        const hero = await getRepository(Hero)
-            .createQueryBuilder('hero')
-            .where("hero.gender = :gender", { gender: query.gender })
-            .orWhere("hero.age = :age", { age: query.age })
-            .take(limit)
-            .skip(limit * (page - 1))
-            .getMany();
-
-        const both = await getRepository(Hero)
-            .createQueryBuilder('hero')
-            .where("hero.gender = :gender", { gender: query.gender })
-            .andWhere("hero.age = :age", { age: query.age })
-            .take(limit)
-            .skip(limit * (page - 1))
-            .getMany();
-
-        if (query.age != null && query.gender != null) {
-            return both;
-        }
-        else {
-            return hero;
-        }
+        return result;
     }
 
     async search(gender: string, age: number, page: number = 1, limit: number) {
@@ -57,28 +44,6 @@ export class HeroDao {
             .take(limit)
             .skip(limit * (page - 1))
             .getMany()
-
-        return hero;
-    }
-
-    async filterByGender(gender: string, page: number = 1, limit: number) {
-        const hero = await getRepository(Hero)
-            .createQueryBuilder("hero")
-            .where("hero.gender = :gender", { gender: gender })
-            .take(limit)
-            .skip(limit * (page - 1))
-            .getMany();
-
-        return hero;
-    }
-
-    async filterByAge(age: number, page: number = 1, limit: number, ) {
-        const hero = await getRepository(Hero)
-            .createQueryBuilder("hero")
-            .where("hero.age = :age", { age: age })
-            .take(limit)
-            .skip(limit * (page - 1))
-            .getMany();
 
         return hero;
     }

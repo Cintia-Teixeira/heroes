@@ -1,22 +1,21 @@
-import { Controller, Get, Param, Delete, Post, Put, Body, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Post, Put, Body, UseGuards, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { HeroDto } from './hero.dto';
 import { HeroDao } from './hero.dao.service';
 import { Hero } from './hero.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-//import { Pagination } from 'nestjs-typeorm-paginate';
-import { getRepository } from "typeorm";
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { GenderAndAgeQueryDto } from './query.dto';
 
 @Controller('heroes')
 export class HeroesController {
     constructor(private heroDao: HeroDao) { }
 
-    /*@Get()
-    list(): Promise<Hero[]> {
-        return this.heroDao.list();
-    }
+    // @Get()
+    // list(): Promise<Hero[]> {
+    //     return this.heroDao.list();
+    // }
 
-   /* @Get()
+    @Get()
     async index(
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
@@ -27,44 +26,19 @@ export class HeroesController {
             limit,
             route: '/heroes',
         });
-    }*/
+    }
+
+    @UsePipes(new ValidationPipe({
+        transform: true
+    }))
     @Get('filter')
     async getByGenderAndAge(
-        @Query() query: GenderAndAgeQueryDto,
         @Query('page') page: number,
-        @Query('limit') limit: number
-    ){
+        @Query('limit') limit: number,
+        @Query() query: GenderAndAgeQueryDto
+    ) {
         return this.heroDao.filter(query, page, limit);
     }
-
-    @Get('search')
-    async filterByGenderAndAge(
-        @Query('gender') gender: string,
-        @Query('age') age: number,
-        @Query('page') page: number,
-        @Query('limit') limit: number
-    ){
-        return this.heroDao.search(gender, age, page, limit);
-    }
-
-    @Get('gender')
-    async filterByGender(
-        @Query('gender') gender: string,
-        @Query('page') page: number,
-        @Query('limit') limit: number, ) {
-        const hero = this.heroDao.filterByGender(gender, page, limit)
-        return hero;
-    }
-
-    @Get('age')
-    async filterByAge(
-        @Query('age') age: number,
-        @Query('page') page: number,
-        @Query('limit') limit: number, ) {
-        const hero = this.heroDao.filterByAge(age, page, limit)
-        return hero;
-    }
-
 
     @UseGuards(JwtAuthGuard)
     @Post()
